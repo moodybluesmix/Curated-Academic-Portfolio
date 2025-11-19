@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36705.20 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{C2D7212F-4FCC-47D1-86A1-892328E79B05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dev", "Dev", "{B0408EF4-9D8B-4EAF-954B-34BB44DA4FC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuratedAcademicPortfolio.Infrastructure", "CuratedAcademicPortfolio.Infrastructure\CuratedAcademicPortfolio.Infrastructure.csproj", "{F2ED01E0-68BD-4710-B155-F675CA6B56C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuratedAcademicPortfolio.Application", "CuratedAcademicPortfolio.Application\CuratedAcademicPortfolio.Application.csproj", "{8EC62023-9EA3-4362-AD13-92BFC3EE4E48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuratedAcademicPortfolio.API", "CuratedAcademicPortfolio.API\CuratedAcademicPortfolio.API.csproj", "{4CD4BC0F-6C7E-4E93-A34F-7EB0DD4C2E10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuratedAcademicPortfolio.Domain", "CuratedAcademicPortfolio.Domain\CuratedAcademicPortfolio.Domain.csproj", "{285F8E13-DD69-41F4-96B8-E256AC4384E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2ED01E0-68BD-4710-B155-F675CA6B56C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2ED01E0-68BD-4710-B155-F675CA6B56C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2ED01E0-68BD-4710-B155-F675CA6B56C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2ED01E0-68BD-4710-B155-F675CA6B56C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EC62023-9EA3-4362-AD13-92BFC3EE4E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EC62023-9EA3-4362-AD13-92BFC3EE4E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EC62023-9EA3-4362-AD13-92BFC3EE4E48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EC62023-9EA3-4362-AD13-92BFC3EE4E48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD4BC0F-6C7E-4E93-A34F-7EB0DD4C2E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD4BC0F-6C7E-4E93-A34F-7EB0DD4C2E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD4BC0F-6C7E-4E93-A34F-7EB0DD4C2E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD4BC0F-6C7E-4E93-A34F-7EB0DD4C2E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285F8E13-DD69-41F4-96B8-E256AC4384E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285F8E13-DD69-41F4-96B8-E256AC4384E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285F8E13-DD69-41F4-96B8-E256AC4384E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285F8E13-DD69-41F4-96B8-E256AC4384E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F2ED01E0-68BD-4710-B155-F675CA6B56C9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8EC62023-9EA3-4362-AD13-92BFC3EE4E48} = {C2D7212F-4FCC-47D1-86A1-892328E79B05}
+		{4CD4BC0F-6C7E-4E93-A34F-7EB0DD4C2E10} = {B0408EF4-9D8B-4EAF-954B-34BB44DA4FC6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E01735C1-616F-4AEA-B1B9-778CC75E40DB}
+	EndGlobalSection
+EndGlobal

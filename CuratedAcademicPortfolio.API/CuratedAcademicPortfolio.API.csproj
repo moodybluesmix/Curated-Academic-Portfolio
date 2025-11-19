@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CuratedAcademicPortfolio.Application\CuratedAcademicPortfolio.Application.csproj" />
+    <ProjectReference Include="..\CuratedAcademicPortfolio.Infrastructure\CuratedAcademicPortfolio.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

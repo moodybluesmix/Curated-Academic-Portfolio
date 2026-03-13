@@ -35,3 +35,9 @@ Su hatayi kok neden seviyesinde coz: <hata>. Once yeniden uretme yolunu ve etkil
 ```text
 Bugunku calismayi ozetle. Kalici not gerektiriyorsa docs altinda ilgili dosyayi guncelle, sonra git durumunu ve onerilen sonraki adimi yaz.
 ```
+
+## Session Log Update
+
+```text
+Bu oturumu kapatmadan once docs/codex/SESSION_LOG.md dosyasina bugunku calismayi 5-6 satirla isle ve sonra kisa bir handoff ozeti ver.
+```

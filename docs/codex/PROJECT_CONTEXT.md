@@ -31,6 +31,7 @@
 - `docs/INCELEME_NOTLARI.md`
 - `docs/codex/PROJECT_CONTEXT.md`
 - `docs/codex/SESSION_RESET.md`
+- `docs/codex/SESSION_LOG.md`
 - `docs/codex/REQUEST_TEMPLATES.md`
 - `docs/codex/DECISION_LOG.md`
 
@@ -40,3 +41,4 @@
 2. `docs/codex/PROJECT_CONTEXT.md` dosyasini oku.
 3. `git status --short --branch` ile dal ve calisma agacini kontrol et.
 4. Gerekliyse ilgili dokuman dosyasini guncelle.
+5. Oturum sonuysa `docs/codex/SESSION_LOG.md` dosyasina kisa kayit dus.

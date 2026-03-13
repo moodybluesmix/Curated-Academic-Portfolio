@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1E30AFC1-4
 		docs\codex\DECISION_LOG.md = docs\codex\DECISION_LOG.md
 		docs\codex\PROJECT_CONTEXT.md = docs\codex\PROJECT_CONTEXT.md
 		docs\codex\REQUEST_TEMPLATES.md = docs\codex\REQUEST_TEMPLATES.md
+		docs\codex\SESSION_LOG.md = docs\codex\SESSION_LOG.md
 		docs\codex\SESSION_RESET.md = docs\codex\SESSION_RESET.md
 	EndProjectSection
 EndProject

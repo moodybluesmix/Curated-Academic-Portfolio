@@ -22,7 +22,7 @@
 ## Working Defaults
 
 - Proje dokumanlari `docs/` altinda tutulur.
-- Yeni dokumanlar Visual Studio'da gorunsun istenirse `AcademicPortfolio.sln` icindeki `docs` solution folder'ina eklenir.
+- Dokumanlar solution'a eklenmez; dogrudan `docs/` klasorunden takip edilir.
 - Push oncesi temel dogrulama komutu: `dotnet build AcademicPortfolio.sln`
 - Config dosyalarinda gercek sir veya parola tutulmaz.
 

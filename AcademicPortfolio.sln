@@ -13,16 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademicPortfolio.WebUI", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademicPortfolio.WebAPI", "AcademicPortfolio.WebAPI\AcademicPortfolio.WebAPI.csproj", "{F0DF4587-3457-4344-B4CC-F5A44A30E398}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1E30AFC1-4455-4C7C-8E10-A536464C0D63}"
-	ProjectSection(SolutionItems) = preProject
-		docs\INCELEME_NOTLARI.md = docs\INCELEME_NOTLARI.md
-		docs\codex\DECISION_LOG.md = docs\codex\DECISION_LOG.md
-		docs\codex\PROJECT_CONTEXT.md = docs\codex\PROJECT_CONTEXT.md
-		docs\codex\REQUEST_TEMPLATES.md = docs\codex\REQUEST_TEMPLATES.md
-		docs\codex\SESSION_LOG.md = docs\codex\SESSION_LOG.md
-		docs\codex\SESSION_RESET.md = docs\codex\SESSION_RESET.md
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

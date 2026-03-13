@@ -21,7 +21,7 @@ Bu degisiklikleri review et. Once bulgulari oncelik sirasiyla yaz, sonra acik ri
 ## Documentation Update
 
 ```text
-Bu calismanin sonucunu docs altinda uygun dosyaya isle. Gerekirse yeni bir markdown dosyasi olustur ve solution icindeki docs klasorune ekle.
+Bu calismanin sonucunu docs altinda uygun dosyaya isle. Gerekirse yeni bir markdown dosyasi olustur.
 ```
 
 ## Bug Fix

@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="9.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AcademicPortfolio.Data\AcademicPortfolio.Data.csproj" />
     <ProjectReference Include="..\AcademicPortfolio.Shared\AcademicPortfolio.Shared.csproj" />
   </ItemGroup>

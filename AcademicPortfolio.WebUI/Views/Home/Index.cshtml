@@ -1,8 +1,339 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akademik Portföy AI Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style type="text/tailwindcss">
+        @@layer base {
+            body {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+            }
+        }
+
+        @@layer components {
+            .nav-btn {
+                @@apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-semibold text-sm w-full text-left;
+            }
+
+                .nav-btn.active {
+                    @@apply bg-blue-600 text-white shadow-lg shadow-blue-200;
+                }
+
+                .nav-btn:not(.active) {
+                    @@apply text-slate-500 hover:bg-slate-100;
+                }
+
+            .glass-card {
+                @@apply bg-white border border-slate-200 shadow-sm rounded-3xl transition-all hover:shadow-md;
+            }
+
+            .badge-q1 {
+                @@apply bg-amber-100 text-amber-700 px-2 py-0.5 rounded-md text-[10px] font-black uppercase;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC]">
+
+    <div id="app" class="flex min-h-screen overflow-hidden">
+
+        <!-- Sidebar (Sol Menü) -->
+        <aside class="w-72 bg-white border-r border-slate-200 p-6 flex flex-col gap-8 shrink-0">
+            <div class="flex items-center gap-3 px-2">
+                <div class="bg-blue-600 p-2 rounded-xl text-white">
+                    <i data-lucide="award"></i>
+                </div>
+                <h1 class="font-bold text-xl tracking-tight text-slate-800">Akademik<span class="text-blue-600 font-extrabold">AI</span></h1>
+            </div>
+
+            <nav class="flex flex-col gap-2">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn active"><i data-lucide="layout-dashboard"></i> Dashboard</button>
+                <button onclick="switchTab('add')" id="btn-add" class="nav-btn"><i data-lucide="plus-circle"></i> Yeni Yayın Ekle</button>
+                <button onclick="switchTab('library')" id="btn-library" class="nav-btn"><i data-lucide="library"></i> Yayın Havuzu</button>
+                <button onclick="switchTab('ai')" id="btn-ai" class="nav-btn"><i data-lucide="brain-circuit"></i> AI Sorgu (MCP)</button>
+            </nav>
+
+            <div class="mt-auto bg-slate-900 rounded-3xl p-5 text-white relative overflow-hidden">
+                <p class="text-[10px] font-black text-blue-400 uppercase mb-1 tracking-widest">TÜBİTAK 2209-A</p>
+                <p class="text-sm font-medium mb-3">Küratörlü sistem ile veri doğruluğu sağlandı.</p>
+                <button onclick="downloadExcel()" class="text-xs bg-white text-slate-900 px-4 py-2 rounded-xl font-bold hover:bg-blue-50 transition">Hızlı Rapor Al</button>
+            </div>
+        </aside>
+
+        <!-- Main Content (Ana İçerik) -->
+        <main class="flex-1 flex flex-col h-screen overflow-hidden">
+            <header class="h-20 bg-white border-b border-slate-200 px-8 flex items-center justify-between shrink-0">
+                <h2 id="page-title" class="text-sm font-black text-slate-800 uppercase tracking-widest">DASHBOARD</h2>
+                <div class="flex items-center gap-4">
+                    <div class="text-right">
+                        <p class="text-sm font-extrabold text-slate-800">Melike KARAKAŞOĞLU</p>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tight">Sakarya Üniversitesi</p>
+                    </div>
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold">MK</div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-8">
+
+                <!-- DASHBOARD (Belge Şekil 2'ye Uygun) -->
+                <div id="content-dashboard" class="tab-content space-y-8 animate-in fade-in duration-500">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="glass-card p-4 flex items-center justify-between border-l-4 border-blue-600">
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">YAYIN SAYISI</p><h3 id="stat-total" class="text-xl font-black">0</h3></div>
+                            <i data-lucide="book-open" class="text-slate-200"></i>
+                        </div>
+                        <div class="glass-card p-4 flex items-center justify-between border-l-4 border-amber-500">
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">Q1 YAYINLAR</p><h3 id="stat-q1" class="text-xl font-black">0</h3></div>
+                            <i data-lucide="star" class="text-slate-200"></i>
+                        </div>
+                        <div class="glass-card p-4 flex items-center justify-between border-l-4 border-emerald-500">
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">PROJE ÇIKTISI</p><h3 id="stat-project" class="text-xl font-black">0</h3></div>
+                            <i data-lucide="folder-kanban" class="text-slate-200"></i>
+                        </div>
+                        <div class="glass-card p-4 flex items-center justify-between border-l-4 border-indigo-500">
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">H-İNDEKS</p><h3 class="text-xl font-black">--</h3></div>
+                            <i data-lucide="bar-chart-3" class="text-slate-200"></i>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-8">
+                        <div class="col-span-2 space-y-4">
+                            <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest">Son Eklenen Eserler</h3>
+                            <div id="recent-works" class="space-y-3">
+                                <!-- JS ile dolacak -->
+                            </div>
+                        </div>
+                        <div class="col-span-1 glass-card p-6 bg-slate-900 text-white flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-extrabold mb-1">AI Özet Analizi</h3>
+                                <p class="text-[10px] text-blue-400 font-bold uppercase mb-4">Gemini Pro Entegrasyonu</p>
+                                <p class="text-xs text-slate-400 italic">"Mevcut portföyünüzdeki Q1 yayın oranı, akademik teşvik kriterleri için oldukça güçlü bir eğilim gösteriyor."</p>
+                            </div>
+                            <button onclick="downloadExcel()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-xs mt-6 flex items-center justify-center gap-2">
+                                <i data-lucide="file-spreadsheet" size="14"></i> EXCEL RAPORU ÜRET
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- YAYIN EKLEME (DOI Sorgu ve Küratör Onayı) -->
+                <div id="content-add" class="tab-content hidden max-w-4xl mx-auto space-y-6">
+                    <div class="glass-card p-10 text-center">
+                        <h3 class="text-2xl font-black mb-6 tracking-tight">Akıllı Yayın Girişi</h3>
+                        <div class="flex gap-2">
+                            <input id="doi-input" type="text" placeholder="10.1145/..." class="flex-1 p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-blue-600 transition">
+                            <button onclick="fetchDoi()" class="bg-blue-600 text-white px-10 rounded-2xl font-bold hover:bg-blue-700">Sorgula</button>
+                        </div>
+                    </div>
+                    <div id="doi-result" class="hidden animate-in slide-in-from-bottom-4"></div>
+                </div>
+
+                <!-- YAYIN HAVUZU (Gelişmiş Filtreleme) -->
+                <div id="content-library" class="tab-content hidden space-y-6">
+                    <div class="glass-card p-6 flex flex-wrap gap-4 items-end bg-white">
+                        <div class="flex-1 min-w-[200px] space-y-1">
+                            <label class="text-[10px] font-black text-slate-400 uppercase">Arama</label>
+                            <input type="text" id="filter-search" oninput="filterLibrary()" placeholder="Makale başlığında ara..." class="w-full p-2.5 bg-slate-50 border border-slate-100 rounded-lg text-xs font-bold">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black text-slate-400 uppercase">Kategori</label>
+                            <select id="filter-q" onchange="filterLibrary()" class="p-2.5 bg-slate-50 border border-slate-100 rounded-lg text-xs font-bold">
+                                <option value="All">Hepsi</option>
+                                <option value="Q1">Sadece Q1</option>
+                                <option value="Q2">Sadece Q2</option>
+                            </select>
+                        </div>
+                        <button onclick="downloadExcel()" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2">
+                            <i data-lucide="download" size="14"></i> EXCEL AKTAR
+                        </button>
+                    </div>
+
+                    <div class="glass-card overflow-hidden">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                    <th class="px-8 py-5">Eser Bilgisi</th>
+                                    <th class="px-8 py-5 text-center">Yıl</th>
+                                    <th class="px-8 py-5 text-center">İndeks/Q</th>
+                                    <th class="px-8 py-5 text-right">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="library-body" class="divide-y divide-slate-50 text-sm font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- AI SORGU (MCP Arayüzü) -->
+                <div id="content-ai" class="tab-content hidden max-w-4xl mx-auto space-y-6">
+                    <div class="glass-card p-8 bg-gradient-to-br from-white to-blue-50 border-2 border-blue-100">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="bg-blue-600 p-2 rounded-lg text-white"><i data-lucide="brain-circuit"></i></div>
+                            <h3 class="text-xl font-black text-slate-800 tracking-tight">AI Akademik Asistan</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div id="ai-chat" class="h-64 overflow-y-auto bg-white/50 border rounded-2xl p-4 text-sm font-medium italic text-slate-500">
+                                Portföyünüzdeki veriler üzerinde sorgulama yapın. (Örn: "Hangi makalelerim Q1?")
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" id="ai-input" placeholder="Bir soru sorun..." class="flex-1 p-4 bg-white border-2 rounded-2xl font-bold outline-none focus:border-blue-500">
+                                <button onclick="askAI()" id="ai-btn" class="bg-blue-600 text-white px-8 rounded-2xl font-black transition-transform hover:scale-105">Sor</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_URL = "https://localhost:7231/api/Works";
+        const REPORT_URL = "https://localhost:7231/api/Report/export-excel";
+        let currentWork = null;
+        let fullLibrary = [];
+
+        lucide.createIcons();
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('btn-' + tabId).classList.add('active');
+            document.getElementById('page-title').innerText = tabId.toUpperCase();
+            if(tabId === 'library' || tabId === 'dashboard') loadLibrary();
+        }
+
+        function downloadExcel() { window.location.href = REPORT_URL; }
+
+        async function fetchDoi() {
+            const doi = document.getElementById('doi-input').value;
+            if(!doi) return;
+            try {
+                const res = await axios.get(`${API_URL}/fetch/${encodeURIComponent(doi)}`);
+                currentWork = res.data;
+                const resultDiv = document.getElementById('doi-result');
+                resultDiv.classList.remove('hidden');
+                resultDiv.innerHTML = `
+                    <div class="glass-card p-10 border-blue-500 relative">
+                        <span class="text-[10px] font-black bg-blue-600 text-white px-3 py-1 rounded-full uppercase mb-4 inline-block">DOI BULUNDU</span>
+                        <h4 class="text-xl font-black text-slate-800 leading-tight mb-8">${currentWork.title}</h4>
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div>
+                                <label class="text-[9px] font-black text-slate-400 uppercase">Q Kategori Seçimi</label>
+                                <select id="save-q" class="w-full p-3 bg-slate-50 border rounded-xl text-xs font-bold text-blue-600">
+                                    <option value="Q1">Q1 Kategorisi</option>
+                                    <option value="Q2">Q2 Kategorisi</option>
+                                    <option value="None">Kategori Belirtilmedi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-black text-slate-400 uppercase">Proje Kodu</label>
+                                <input id="save-project" type="text" placeholder="Örn: TÜBİTAK 1001" class="w-full p-3 bg-slate-50 border rounded-xl text-xs font-bold">
+                            </div>
+                        </div>
+                        <button onclick="saveWork()" class="w-full bg-green-600 text-white py-4 rounded-2xl font-black shadow-lg hover:bg-green-700 transition">VERİTABANINA ONAYLA VE KAYDET</button>
+                    </div>
+                `;
+                lucide.createIcons();
+            } catch (err) { alert("DOI verisi çekilemedi."); }
+        }
+
+        async function saveWork() {
+            try {
+                currentWork.qCategory = document.getElementById('save-q').value;
+                currentWork.projectCode = document.getElementById('save-project').value;
+                currentWork.isProjectOutput = currentWork.projectCode ? true : false;
+                await axios.post(`${API_URL}/save`, currentWork);
+                alert("Küratörlü veri başarıyla kaydedildi.");
+                document.getElementById('doi-input').value = "";
+                document.getElementById('doi-result').classList.add('hidden');
+                loadLibrary();
+            } catch (err) { alert("Hata oluştu."); }
+        }
+
+        async function askAI() {
+            const input = document.getElementById('ai-input');
+            const chat = document.getElementById('ai-chat');
+            if(!input.value) return;
+            chat.innerHTML = "Düşünüyorum...";
+            try {
+                const res = await axios.post(`${API_URL}/ai-query`, { prompt: input.value });
+                chat.innerHTML = `<div class='animate-in fade-in'>${res.data.response}</div>`;
+            } catch (err) { chat.innerHTML = "AI şu an yanıt veremiyor."; }
+        }
+
+        async function loadLibrary() {
+            try {
+                const res = await axios.get(API_URL);
+                fullLibrary = res.data;
+                renderLibrary(fullLibrary);
+                updateStats();
+            } catch (err) { console.error(err); }
+        }
+
+        function renderLibrary(data) {
+            const tbody = document.getElementById('library-body');
+            const recentDiv = document.getElementById('recent-works');
+
+            tbody.innerHTML = data.map(w => `
+                <tr class="hover:bg-blue-50/50 transition">
+                    <td class="px-8 py-6">
+                        <p class="font-bold text-slate-800">${w.title}</p>
+                        <p class="text-[10px] text-slate-400 mt-1">${w.journalName}</p>
+                        ${w.projectCode ? `<span class='text-[9px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded'>${w.projectCode}</span>` : ''}
+                    </td>
+                    <td class="px-8 py-6 text-center font-bold text-slate-500">${w.publicationYear}</td>
+                    <td class="px-8 py-6 text-center">
+                        <span class="${w.qCategory === 'Q1' ? 'badge-q1' : 'bg-slate-100 text-slate-400 px-2 py-1 rounded text-[10px] font-black'}">${w.qCategory}</span>
+                    </td>
+                    <td class="px-8 py-6 text-right">
+                        <button onclick="window.open('https://doi.org/${w.doi}')" class="text-slate-300 hover:text-blue-600"><i data-lucide="external-link" size="18"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            if(recentDiv) {
+                recentDiv.innerHTML = data.slice(0, 3).map(w => `
+                    <div class="glass-card p-4 flex justify-between items-center group">
+                        <div class="truncate max-w-[80%]">
+                            <p class="text-xs font-bold text-slate-800">${w.title}</p>
+                            <p class="text-[10px] text-slate-400">${w.journalName}</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="text-slate-200 group-hover:text-blue-600 transition" size="16"></i>
+                    </div>
+                `).join('');
+            }
+            lucide.createIcons();
+        }
+
+        function filterLibrary() {
+            const search = document.getElementById('filter-search').value.toLowerCase();
+            const q = document.getElementById('filter-q').value;
+            const filtered = fullLibrary.filter(w => (q === 'All' || w.qCategory === q) && w.title.toLowerCase().includes(search));
+            renderLibrary(filtered);
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').innerText = fullLibrary.length;
+            document.getElementById('stat-q1').innerText = fullLibrary.filter(w => w.qCategory === 'Q1').length;
+            document.getElementById('stat-project').innerText = fullLibrary.filter(w => w.isProjectOutput).length;
+        }
+
+        loadLibrary();
+    </script>
+
+</body>
+</html>
